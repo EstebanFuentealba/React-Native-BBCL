@@ -5,19 +5,30 @@
 'use strict';
 
 var React = require('react-native');
+var ToastAndroid = require('ToastAndroid');
 var BBCLLayout = require('./components/BBCLLayout');
 var {
   AppRegistry,
   Dimensions,
   View,
+  NativeModules,
 } = React;
+
+var BBCL = NativeModules.BBCL;
 class Reactbbcl extends React.Component {
   constructor(props){
     super(props);
+    let json = eval("(" + this.props.jsonBBCL + ")");
+    this.state = {
+      json: json
+    };
+  }
+  componentDidMount() {
+    BBCL.setDefaultColor();
   }
   render() {
     return (
-      <BBCLLayout />
+      <BBCLLayout json={this.state.json}/>
     )
   }
 }
